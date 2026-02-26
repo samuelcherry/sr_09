@@ -1,23 +1,21 @@
-const handleRegister = async (
-  e: React.ChangeEvent,
-  username: string,
-  email: string,
-  password: string,
-) => {
-  e.preventDefault();
+interface RegisterData {
+  username: string;
+  email: string;
+  password: string;
+}
 
-  try {
-    const response = await fetch("http://localhost:3000/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password }),
-    });
+const handleRegister = async (data: RegisterData) => {
+  const response = await fetch("http://localhost:3000/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
 
-    const user = response.json();
-    return user;
-  } catch (error) {
-    console.error("Registration Error", error);
+  if (!response.ok) {
+    throw new Error("Registration Failed");
   }
+
+  return response.json();
 };
 
 export default handleRegister;

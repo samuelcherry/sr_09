@@ -9,13 +9,19 @@ const Register = () => {
 
   const navigate = useNavigate();
 
-  const register = async (e: React.ChangeEvent) => {
-    const user = await handleRegister(e, username, email, password);
+  const onSubmit = async (e: React.ChangeEvent) => {
+    e.preventDefault();
 
-    if (!user) {
-      throw new Error("registration error");
-    } else {
+    const formData = {
+      username,
+      email,
+      password,
+    };
+    try {
+      await handleRegister(formData);
       navigate("/login");
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -27,7 +33,7 @@ const Register = () => {
     <>
       <div className="flex flex-col items-center">
         <form
-          onSubmit={register}
+          onSubmit={onSubmit}
           className=" bg-gray-400 rounded-lg p-2 m-2 w-1/5"
         >
           <div className="flex flex-col items-center">

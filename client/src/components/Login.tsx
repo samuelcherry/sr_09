@@ -8,15 +8,18 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const login = async (e: React.ChangeEvent) => {
+  const onSubmit = async (e: React.ChangeEvent) => {
     e.preventDefault();
-    const user = await handleLogin(email, password);
-    console.log("USER: ", user);
+    const formData = {
+      email,
+      password,
+    };
 
-    if (!user) {
-      throw new Error("login error");
-    } else {
+    try {
+      await handleLogin(formData);
       navigate("/");
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -28,7 +31,7 @@ const Login = () => {
     <>
       <div className="flex flex-col items-center">
         <form
-          onSubmit={login}
+          onSubmit={onSubmit}
           className=" bg-gray-400 rounded-lg p-2 m-2 w-1/5"
         >
           <div className="flex flex-col items-center">

@@ -44,7 +44,6 @@ app.post("/register", async (req, res) => {
     );
 
     const response = registerQuery.rows[0];
-    console.log("Response1: ", response.ok);
     if (response) {
       return res
         .status(200)
